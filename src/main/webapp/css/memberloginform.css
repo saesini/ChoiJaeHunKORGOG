@@ -1,0 +1,58 @@
+@charset "UTF-8";
+#memberid, #password {
+	ime-mode: disabled;
+}			
+
+input[type=text], input[type=password] {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	font-size: 20px;
+	text-align: center;
+}
+
+input[type=button] {
+	background-color: #4d77af;
+	color: white;
+	padding: 14px 0;
+	border: none;
+	cursor: pointer;
+	width: 150px;
+	font-size: 16px;
+	border-radius: 6px;
+}
+
+button:hover {
+	opacity: 0.8;
+}
+
+.btnleft {
+	margin-right: 20px;
+}
+
+.imgcontainer {
+	text-align: center;
+	margin: 24px 0 12px 0;
+}
+
+img.taegeuk {
+	width: 200px;
+	height: 200px;
+}
+
+.container {
+	width: 400px;
+	margin: 0 auto;
+	padding: 6px;
+	text-align: center;
+}
+
+.loginlabel {
+	width: 400px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+}

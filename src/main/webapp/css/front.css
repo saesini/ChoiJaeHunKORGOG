@@ -1,0 +1,54 @@
+@charset "UTF-8";
+@-moz-document url-prefix() {
+	html, body{
+		overflow: hidden !important;
+	}
+}
+
+@-moz-document url-prefix() {
+	html{
+		overflow: hidden;
+		scrollbar-width: none;
+	}
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+	width: 0px;
+	background: transparent;
+	overflow: hidden;
+}
+
+::-webkit-scrollbar {
+	width: 0px;
+	background: transparent;
+	overflow: hidden;
+}
+
+#myVideo {
+	position: fixed;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	min-width: 100vw;
+	min-height: 100vh;
+	background-color: #ffffff;
+	object-fit: cover;
+	z-index: -1;
+}
+
+#welcome {
+	margin: 35px auto 0 auto;
+	width: 600px;
+	border: 2px solid #0047a0;
+	padding: 20px;
+	font-size: 22px;
+	line-height: 160%;
+}

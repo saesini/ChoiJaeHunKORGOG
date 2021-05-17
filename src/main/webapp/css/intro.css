@@ -1,0 +1,22 @@
+@charset "UTF-8";
+table, th, td {
+	margin: 0 auto;
+	width: 600px;
+	border: 1px solid #0047a0;
+	border-spacing: 0;
+	font-size: 18px;
+	line-height: 160%;
+}
+th, td {
+	padding: 20px;
+}
+
+th {
+	width: 25%;
+	background-color: #4d77af;
+	color: #ffffff;
+}
+
+td {
+	width: 75%;
+}

@@ -1,0 +1,112 @@
+@charset "UTF-8";
+#titlediv {
+	padding: 30px 0 20px 0;
+ }
+
+.container {
+	margin: 0 auto;
+	width: 950px;
+}
+
+input[type=text], input[type=password], input[type=button], select {
+	width: 100%;
+	padding: 6px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical;
+	font-size: 18px;
+	vertical-align: middle;
+}
+
+label {
+	padding: 12px 12px 12px 0;
+	display: inline-block;
+}
+
+.divitem {
+	float: left;
+	text-align:right;
+	width: 45%;
+	margin-top: 6px;
+}
+
+.divvalue {
+	float: left;
+	width: 55%;
+	margin-top: 6px;
+}
+
+#email {
+	ime-mode: disabled;
+}
+
+#memberid {
+	ime-mode: disabled;
+}
+
+#membername {
+	ime-mode: active;
+}
+
+.tell {
+	width: 100px !important;
+}
+
+.gender {
+	width: 105px !important;
+	text-align: center;
+	background-color: #ffffff;
+	margin-right: 17px !important;
+}
+
+.btnjoindiv {
+	margin: 0 auto;
+	padding-top: 20px;
+	text-align: left;
+}
+
+#btnjoin {
+	width:200px !important;
+	display: inline-block;
+	resize: vertical;
+	vertical-align: middle;
+	color: #ffffff;
+	background-color: #4d77af;
+	font-size: 18px;
+	padding: 12px 20px;
+	border: 1px solid #ccc;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.clicked {
+	border: 2px solid #ccc;
+}
+
+.unclicked {
+	border: 1px solid #ccc;
+}
+
+#member_result {
+	width: 200px;
+	padding: 6px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical;
+	font-size: 18px;
+	vertical-align: middle;
+}
+
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+@media screen and (max-width: 600px) {
+	.divitem, .divvalue, input[type=submit] {
+		width: 100%;
+		margin-top: 0;
+	}
+}

@@ -36,11 +36,6 @@ public class Tools {
 		return encryptedString;
 	}
 
-	public static void main(String[] args) {
-		int aaa = Tools.getTableNum("SCORE", "WHERE MEMBERNUM = 1");
-		System.out.println(aaa);
-	}
-
 	public static int getTableNum(String table, String queryWhere) {
 		int tableNum = 0;
 		Connection connection = null;

@@ -38,6 +38,7 @@ input[type=button] {
 	width: 150px;
 	font-size: 16px;
 	border-radius: 6px;
+	margin-top: 10px;
 }
 
 .btnleft {

@@ -30,7 +30,7 @@
 			} else {
 		%>
 		<ul><li class="member_menu"><a href="/member/memberloginform.jsp">로 그 인</a></li></ul>
-		<ul><li class="member_menu"><a href="/member/memberjoinform.jsp">회원가입</a></li></ul>
+		<ul><li class="member_menu"><a href="/member/memberterms.jsp">회원가입</a></li></ul>
 		<%
 			}
 		%>

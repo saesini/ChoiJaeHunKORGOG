@@ -1,15 +1,20 @@
 <%@page language="java" contentType="text/html;charesultsetet=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/include/common.jsp" %>
+<%
+	if (request.getParameter("agree1") == null || request.getParameter("agree1") == null) {
+		response.sendRedirect("/member/memberterms.jsp");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
 		<% pageContext.include("/include/meta.jsp");%>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/memberjoin.css">
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script type="text/javascript" src="/script/memberjoinform.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/common.css">
+		<link rel="stylesheet" type="text/css" href="/css/memberjoin.css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<title>회원 가입 - GOG</title>
 	</head>
 	<body>
@@ -130,7 +135,7 @@
 				</div>
 				<div class="row">
 					<div class="divitem">
-						<label>(필수)  <span class="bold">성별</span></label>
+						<label>(필수) <span class="bold">성별</span></label>
 					</div>
 					<div class="divvalue">
 						<input type='hidden' id="gender" name="gender"/>

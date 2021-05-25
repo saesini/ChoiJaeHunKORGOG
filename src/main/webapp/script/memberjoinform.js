@@ -150,7 +150,7 @@ $(function () {
 			return false;
 		}
 
-		if ($("#birthday").val() === null || $("#birthday").val() === "" || $("#birthday").val().length != 10) {
+		if ($("#birthday").val() === null || $("#birthday").val() === "" || $("#birthday").val().length !== 10) {
 			alert("생년월일을 선택하여 주십시오.");
 			return false;
 		}

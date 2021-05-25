@@ -38,6 +38,11 @@ function searchScore() {
 	searchColumn = searchColumn.trim();
 	searchString = searchString.trim();
 
+	if(searchString.length < 1 || searchString.length < 1) {
+		alert("검색어를 입력한 후 다시 검색을 시도하여 주십시오.");
+		return false;
+	}
+
 	movePage(0, searchColumn, searchString);
 }
 

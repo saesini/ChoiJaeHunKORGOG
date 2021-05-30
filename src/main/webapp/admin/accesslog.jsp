@@ -7,7 +7,7 @@
 	request.setCharacterEncoding("UTF-8");
 
 	String refererPage = "";
-	refererPage = request.getHeader("REFERER");
+	refererPage = request.getHeader("REFERER").toLowerCase();
 
 	if (refererPage == null || refererPage.length() < 1) {
 		refererPage = "/";

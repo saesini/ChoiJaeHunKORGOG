@@ -7,16 +7,37 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
-	boolean writeResult = false;
-	int boardNum = 0;
-	int memberNum = (Integer) session.getAttribute("memberNum");
-	String subject = "";
-	String content = "";
+	String refererPage = "";
+	refererPage = request.getHeader("REFERER");
 
+	if (refererPage == null || refererPage.length() < 1) {
+		refererPage = "/";
+	}
+
+	if ((String) session.getAttribute("memberID") == null) {
+		response.sendRedirect(refererPage);
+	}
+	
+	int boardNum = 0;
 	if (request.getParameter("boardnum") != null) {
 		String currentNumString = request.getParameter("boardnum");
 		boardNum = Integer.parseInt(currentNumString);
 	}
+	
+	BoardDAO boardDAO = new BoardDAO();
+	BoardDTO originalBoardDTO = new BoardDTO();
+	originalBoardDTO = boardDAO.getView(boardNum);
+
+	int memberNum = (Integer) session.getAttribute("memberNum");
+	
+	if(memberNum != originalBoardDTO.getMemberNum()) {
+		response.sendRedirect(refererPage);
+	}
+	
+	boolean writeResult = false;
+	String subject = "";
+	String content = "";
+
 	if (request.getParameter("subject") != null) {
 		subject = request.getParameter("subject").trim().toLowerCase();
 		subject = Tools.removeTags(subject);
@@ -34,7 +55,6 @@
 	boardDTO.setSubject(subject);
 	boardDTO.setContent(content);
 
-	BoardDAO boardDAO = new BoardDAO();
 	boardDAO.edit(boardDTO, getIP(request), boardNum, memberNum);
 
 	response.sendRedirect("/board/board.jsp?mode=view&num=" + boardNum);

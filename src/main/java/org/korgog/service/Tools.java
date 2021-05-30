@@ -18,7 +18,7 @@ public class Tools {
 		return formatedScoringTime;
 	}
 
-	public static String removeTags(String html) { // HTML 태그 제거
+	public static String removeTags(String html) {
 		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 	}
 
@@ -67,34 +67,5 @@ public class Tools {
 			DBManager.close(connection, pStatement, resultSet);
 		}
 		return tableNum;
-	}
-
-	public static int getTableCount(String dbTable) {
-		int count = 0;
-
-		Connection connection = null;
-		PreparedStatement pStatement = null;
-		ResultSet resultSet = null;
-		try {
-			String sqlGetLastNum = "SELECT MAX(" + dbTable + "NUM) AS MAXNUM FROM " + dbTable;
-			connection = DBManager.getConnection();
-			pStatement = connection.prepareStatement(sqlGetLastNum);
-			resultSet = pStatement.executeQuery();
-
-			if (resultSet.next()) {
-				count = resultSet.getInt("MAXNUM");
-			}
-
-		} catch (SQLException e) {
-			System.out.println("오류 SQLException : " + e.getSQLState());
-			System.out.println("오류 Message : " + e.getErrorCode() + " - " + e.getMessage());
-			e.printStackTrace(System.out);
-		} catch (Exception e) {
-			System.out.println("오류 Message : " + e.getMessage());
-			e.printStackTrace(System.out);
-		} finally {
-			DBManager.close(connection, pStatement, resultSet);
-		}
-		return count;
 	}
 }

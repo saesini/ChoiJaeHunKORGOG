@@ -3,10 +3,27 @@
 <%@page import="org.korgog.dao.MemberDAO"%>
 <%@page import="org.korgog.dto.MemberDTO"%>
 <%
+	request.setCharacterEncoding("UTF-8");
+	
+	String refererPage = "";
+	refererPage = request.getHeader("REFERER").toLowerCase();
+
+	if (refererPage == null || refererPage.length() < 1) {
+		refererPage = "/";
+	}
+
+	if ((String) session.getAttribute("memberID") == null) {
+		response.sendRedirect(refererPage);
+	}
+
 	MemberDAO memberDAO = new MemberDAO();
 	MemberDTO memberDTO = new MemberDTO();
 	memberDTO = memberDAO.getMember((String) session.getAttribute("memberID"));
- 	String[] tellArray = memberDTO.getTell().split("-");
+	String getTell = memberDTO.getTell();
+	if(getTell.length() == 2) {
+		getTell += " ";
+	}
+ 	String[] tellArray = getTell.split("-");
 	String tell1 = tellArray[0];
 	String tell2 = tellArray[1];
 	String tell3 = tellArray[2];
@@ -25,7 +42,7 @@
 	</head>
 	<body>
 		<%@ include file = "/header.jsp"%>
-		<div id="titlediv">회원 정보수정</div>
+		<div id="titlediv">회원정보 수정</div>
 		<div class="container">
 			<form id="updateform" name="updateform" method="post" action="">
 				<input type="hidden" id="memberid" name="memberid" value="<%=memberDTO.getMemberID()%>"/>
@@ -55,7 +72,7 @@
 				</div>
 				<div class="row">
 					<div class="divitem">
-						<label for="password"><span class="bold">비밀번호 변경</span></label>
+						<label for="password">(선택) <span class="bold">비밀번호 변경</span></label>
 					</div>
 					<div class="divvalue">
 						<input type="password" id="password" name="password" maxlength="20" placeholder="변경시 영어, 숫자 1자 이상 조합으로 최소 8자 이상 입력필요" required/>
@@ -63,7 +80,7 @@
 				</div>
 				<div class="row">
 					<div class="divitem">
-						<label for="password2">(선택)  <span class="bold">비밀번호 확인</span></label>
+						<label for="password2">(선택) <span class="bold">비밀번호 확인</span></label>
 					</div>
 					<div class="divvalue">
 						<input type="password" id="password2" name="password2" maxlength="20" placeholder="입력오류 방지를 위해 비밀번호와 동일하게 입력해 주십시오." required/>
@@ -144,8 +161,14 @@
 					<div class="divitem">
 						<label><span class="bold">생년월일</span></label>
 					</div>
-					<div class="divvalue">
-						<%=memberDTO.getBirthday().substring(0, 10)%>
+					<div class="divvalue textvalue">
+						<%
+							StringBuffer birthDay = new StringBuffer(memberDTO.getBirthday().substring(0, 10).replace("-", ""));
+							birthDay.insert(4, "년 ");
+							birthDay.insert(8, "월 ");
+							birthDay.insert(12, "일");
+							out.println(birthDay);
+						%>
 					</div>
 				</div>
 				<div class="row">

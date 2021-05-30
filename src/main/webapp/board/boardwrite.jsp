@@ -7,6 +7,17 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
+	String refererPage = "";
+	refererPage = request.getHeader("REFERER");
+
+	if (refererPage == null || refererPage.length() < 1) {
+		refererPage = "/";
+	}
+
+	if ((String) session.getAttribute("memberID") == null) {
+		response.sendRedirect(refererPage);
+	}
+
 	int memberNum = (Integer) session.getAttribute("memberNum");
 	String subject = "";
 	String content = "";

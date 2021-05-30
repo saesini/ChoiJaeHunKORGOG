@@ -13,14 +13,14 @@
 
 	boolean loginResult = false;
 	String refererPage = "";
-	refererPage = request.getHeader("REFERER");
+	refererPage = request.getHeader("REFERER").toLowerCase();
 
 	if (refererPage == null || refererPage.length() < 1 || !refererPage.contains("/member/memberloginform.jsp")) {
 		response.sendRedirect("/");
 	}
 
 	String inflowPage = request.getParameter("inflowpage");
-	if (!inflowPage.contains("office") && !inflowPage.contains("score") && !inflowPage.contains("board")) {
+	if ((String) session.getAttribute("memberID") != null || !inflowPage.contains("office") && !inflowPage.contains("score") && !inflowPage.contains("board")) {
 		inflowPage = "/";
 	}
 

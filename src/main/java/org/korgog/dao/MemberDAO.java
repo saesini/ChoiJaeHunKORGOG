@@ -55,7 +55,7 @@ public class MemberDAO {
 		boolean result = false;
 
 		try {
-			int memberNum = Tools.getTableCount(TABLE_MEMBER) + 1;
+			int memberNum = Tools.getTableNum(TABLE_MEMBER, "") + 1;
 			java.sql.Date currentDateTime = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
 			String querySQL = "INSERT INTO "

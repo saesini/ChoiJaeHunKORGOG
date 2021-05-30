@@ -1,5 +1,19 @@
 <%@page language="java" contentType="text/html;charesultsetet=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/include/common.jsp" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	
+	String refererPage = "";
+	refererPage = request.getHeader("REFERER");
+
+	if (refererPage == null || refererPage.length() < 1) {
+		refererPage = "/";
+	}
+
+	if ((String) session.getAttribute("memberID") == null) {
+		response.sendRedirect(refererPage);
+	}
+%>
 <table id="view" class="boardwritetitle">
 	<tr>
 		<td>글쓰기</td>

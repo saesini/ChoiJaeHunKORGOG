@@ -23,7 +23,7 @@ public class BoardDAO {
 
 	public void write(BoardDTO boardDTO, String ipAddress) {
 		try {
-			int boardNum = Tools.getTableCount(TABLE_BOARD) + 1;
+			int boardNum = Tools.getTableNum(TABLE_BOARD, "") + 1;
 			java.sql.Date currentDateTime = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
 			String querySQL = "INSERT INTO "

@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<%@ include file = "/header.jsp"%>
-		<div id="titlediv">회원 가입</div>
+		<div id="titlediv">회원정보 입력</div>
 		<div class="container">
 			<form id="joinform" name="joinform" method="post" action="/member/memberjoin.jsp">
 				<div class="row">

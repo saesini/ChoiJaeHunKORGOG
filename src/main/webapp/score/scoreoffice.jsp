@@ -9,6 +9,14 @@
 	String refererPage;
 	refererPage = request.getHeader("REFERER").toLowerCase();
 
+	if (refererPage == null || refererPage.length() < 1) {
+		refererPage = "/";
+	}
+
+	if ((String) session.getAttribute("memberID") == null) {
+		response.sendRedirect(refererPage);
+	}
+
 	String officeNum = request.getParameter("officenum");
 	String score = request.getParameter("score");
 	String comments = request.getParameter("comments");

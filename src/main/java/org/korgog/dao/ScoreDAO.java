@@ -24,7 +24,7 @@ public class ScoreDAO {
 
 	public void scoreOffice(ScoreDTO scoreDTO, String ipAddress) {
 		try {
-			int scoreNum = Tools.getTableCount(TABLE_SCORE) + 1;
+			int scoreNum = Tools.getTableNum(TABLE_SCORE, "") + 1;
 			java.sql.Date currentDateTime = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
 			String querySQL = "INSERT INTO "

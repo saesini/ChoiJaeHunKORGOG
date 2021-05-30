@@ -9,7 +9,7 @@
 
 	boolean joinResult = false;
 	String refererPage;
-	refererPage = request.getHeader("REFERER");
+	refererPage = request.getHeader("REFERER").toLowerCase();
 
 	if (refererPage == null || refererPage.length() < 1 || !refererPage.contains("/member/memberjoinform.jsp")) {
 		response.sendRedirect("/");

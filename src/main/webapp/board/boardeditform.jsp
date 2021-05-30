@@ -5,6 +5,19 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
+	request.setCharacterEncoding("UTF-8");
+
+	String refererPage = "";
+	refererPage = request.getHeader("REFERER");
+
+	if (refererPage == null || refererPage.length() < 1) {
+		refererPage = "/";
+	}
+
+	if ((String) session.getAttribute("memberID") == null) {
+		response.sendRedirect(refererPage);
+	}
+
 	int boardNum = 1;
 	if (request.getParameter("boardnum") != null) {
 		String currentNumString = request.getParameter("boardnum");
@@ -15,6 +28,10 @@
 	BoardDTO boardDTO = new BoardDTO();
 	boardDTO = boardDAO.getView(boardNum);
 	boardDTO.setContent(boardDTO.getContent().replaceAll("<br/>", "\r\n"));
+	
+	if((Integer) session.getAttribute("memberNum") != boardDTO.getMemberNum()) {
+		response.sendRedirect(refererPage);
+	}
 %>
 <script>document.title = "[수정] <%=boardDTO.getSubject()%> - GOG";</script>
 <table id="view" class="boardwritetitle">

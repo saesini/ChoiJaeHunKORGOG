@@ -22,7 +22,7 @@ public class AccessLogDAO {
 
 	public void addLog(AccessLogDTO accessLogDTO) {
 		try {
-			int accessLogNum = Tools.getTableCount(TABLE_ACCESSLOG) + 1;
+			int accessLogNum = Tools.getTableNum(TABLE_ACCESSLOG, "") + 1;
 			java.sql.Date currentDateTime = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
 			String querySQL = "INSERT INTO "

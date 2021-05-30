@@ -9,12 +9,16 @@
 
 	boolean exitResult = false;
 	String refererPage;
-	refererPage = request.getHeader("REFERER");
+	refererPage = request.getHeader("REFERER").toLowerCase();
 
 	if (refererPage == null || refererPage.length() < 1 || !refererPage.contains("/member/memberupdateform.jsp")) {
 		response.sendRedirect("/");
 	}
 
+	if ((String) session.getAttribute("memberID") == null) {
+		response.sendRedirect(refererPage);
+	}
+	
 	String memberID = "";
 	String password = "";
 	if (request.getParameter("memberid") != null) {

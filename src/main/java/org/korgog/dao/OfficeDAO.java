@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.korgog.config.Environment;
 import org.korgog.service.DBManager;
@@ -13,7 +12,6 @@ import org.korgog.service.Pages;
 import org.korgog.dto.OfficeDTO;
 
 public class OfficeDAO {
-
 	private final String TABLE_OFFICE = Environment.getTABLE_OFFICE();
 	private final String TABLE_SCORE = Environment.getTABLE_SCORE();
 	private Connection connection = null;
@@ -41,25 +39,26 @@ public class OfficeDAO {
 		try {
 			String queryWhere = "";
 			if (searchColumn.length() > 0 && searchString.length() > 0) {
-				queryWhere = " WHERE " + searchColumn + " LIKE '%' || ? || '%' ";
+				queryWhere = " AND " + searchColumn + " LIKE '%' || ? || '%' ";
 			}
 
 			String querySQL = "SELECT * FROM "
-					+ "(SELECT ROWNUM AS RNUM, OFFICELIST.* FROM (SELECT "
+					+ "("
+					+ "SELECT ROWNUM AS RNUM, "
 					+ "OFFICENUM, PART, SNAME, FNAME, "
 					+ "(SELECT COUNT(SCORE) FROM " + TABLE_SCORE + " WHERE OFFICENUM = " + TABLE_OFFICE + ".OFFICENUM) AS SCORECOUNT, "
 					+ "(SELECT CEIL(AVG(SCORE)) FROM " + TABLE_SCORE + " WHERE OFFICENUM = " + TABLE_OFFICE + ".OFFICENUM) AS SCOREAVERAGE "
 					+ "FROM " + TABLE_OFFICE + " "
+					+ "WHERE ROWNUM <= ?"
 					+ queryWhere
-					+ ") OFFICELIST WHERE ROWNUM <= ?) WHERE RNUM >= ? "
-					+ "ORDER BY RNUM DESC";
-			querySQL = querySQL.replaceAll("  ", " ");
+					+ ") "
+					+ "WHERE RNUM >= ? ORDER BY RNUM DESC";
 
 			connection = DBManager.getConnection();
 			pStatement = connection.prepareStatement(querySQL);
 			if (queryWhere.length() > 0) {
-				pStatement.setString(1, searchString);
-				pStatement.setInt(2, startRow);
+				pStatement.setInt(1, startRow);
+				pStatement.setString(2, searchString);
 				pStatement.setInt(3, endRow);
 			} else {
 				pStatement.setInt(1, startRow);

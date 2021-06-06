@@ -33,7 +33,7 @@
 		<table id="view" class="accesslogviewtitle">
 			<%
 				if(accessLogDTO.getAccessLogNum() < 1) {
-					out.print("<tr><td>존재하지 않는 게시물입니다.</th></tr></table>");
+					out.print("<tr><td>존재하지 않는 기록입니다.</th></tr></table>");
 				} else {
 			%>
 			<tr>

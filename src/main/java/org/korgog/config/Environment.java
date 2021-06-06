@@ -18,20 +18,20 @@ public class Environment {
 	private static final String TABLE_BOARD = "BOARD"; // 게시판 - 게시물
 
 	// 관공서 출력 정보
-	private static final int OFFICE_LIST_ROWS = 20; // 페이지당 출력할 행 수
+	private static final int OFFICE_LIST_ROWS = 10; // 페이지당 출력할 행 수
 	private static final int OFFICE_LIST_PAGES = 10; // 페이지 수 출력단위
 
 	// 평가 리스트 출력 정보
-	private static final int SCORE_LIST_ROWS = 30; // 페이지당 출력할 행 수
+	private static final int SCORE_LIST_ROWS = 10; // 페이지당 출력할 행 수
 	private static final int SCORE_LIST_PAGES = 10; // 페이지 수 출력단위
 	private static final int SCORE_OFFICE_ROWS = 30; // 광공서 상세정보에서 출력할 최근 평가의 갯수
 
 	// 게시판 출력 정보
-	private static final int BOARD_LIST_ROWS = 20; // 페이지당 출력할 행 수
+	private static final int BOARD_LIST_ROWS = 10; // 페이지당 출력할 행 수
 	private static final int BOARD_LIST_PAGES = 10; // 페이지 수 출력단위
 
 	// 회원로그 출력 정보
-	private static final int ACCESSLOG_LIST_ROWS = 20; // 페이지당 출력할 행 수
+	private static final int ACCESSLOG_LIST_ROWS = 10; // 페이지당 출력할 행 수
 	private static final int ACCESSLOG_LIST_PAGES = 10; // 페이지 수 출력단위
 
 	public static String getDB_DRIVER() {

@@ -64,7 +64,7 @@
 		updateResult = false;
 	} else if (!password.equals(password2)) {
 		updateResult = false;
-	} else if (refererPage != null && refererPage.length() > 1 && refererPage.contains("/member/memberupdateform.jsp")) {
+	} else if (refererPage != null && refererPage.length() > 0 && refererPage.contains("/member/memberupdateform.jsp")) {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setEmail(email);
 		memberDTO.setMemberID(memberID);

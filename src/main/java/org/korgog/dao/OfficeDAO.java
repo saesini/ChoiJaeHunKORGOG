@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.korgog.config.Environment;
 import org.korgog.service.DBManager;
@@ -12,6 +13,7 @@ import org.korgog.service.Pages;
 import org.korgog.dto.OfficeDTO;
 
 public class OfficeDAO {
+
 	private final String TABLE_OFFICE = Environment.getTABLE_OFFICE();
 	private final String TABLE_SCORE = Environment.getTABLE_SCORE();
 	private Connection connection = null;
@@ -21,17 +23,13 @@ public class OfficeDAO {
 	public Pages getPage(int currentPage, String searchColumn, String searchString) {
 		searchColumn = searchColumn.trim();
 		searchString = searchString.trim();
-		String queryWhere = "";
-		if (searchColumn.length() > 0 && searchString.length() > 0) {
-			queryWhere = " WHERE " + searchColumn + " LIKE '%" + searchString + "%'";
-		}
-		String querySQL = "SELECT COUNT(*) AS TOTALROW FROM " + TABLE_OFFICE + queryWhere;
-		querySQL = querySQL.replaceAll("  ", " ");
+
+		String querySQL = "SELECT COUNT(*) AS TOTALROW FROM " + TABLE_OFFICE;
 
 		int rowsPerPage = Environment.getOFFICE_LIST_ROWS();
 		int pagesPerWindow = Environment.getOFFICE_LIST_PAGES();
 
-		Pages page = new Pages(currentPage, rowsPerPage, pagesPerWindow, querySQL);
+		Pages page = new Pages(currentPage, rowsPerPage, pagesPerWindow, querySQL, searchColumn, searchString);
 		return page;
 	}
 
@@ -43,31 +41,30 @@ public class OfficeDAO {
 		try {
 			String queryWhere = "";
 			if (searchColumn.length() > 0 && searchString.length() > 0) {
-				queryWhere = " WHERE " + searchColumn + " LIKE '%" + searchString + "%' ";
+				queryWhere = " WHERE " + searchColumn + " LIKE '%' || ? || '%' ";
 			}
 
-			String querySQL = "SELECT X.RNUM, X.* FROM "
-					+ "(SELECT ROWNUM AS RNUM, Y.* FROM "
-					+ "(SELECT A.OFFICENUM, A.PART, A.SNAME, A.FNAME, "
-					+ "(SELECT COUNT(SCORE) FROM "
-					+ TABLE_SCORE
-					+ " WHERE A.OFFICENUM = OFFICENUM) AS SCORECOUNT, "
-					+ "(SELECT CEIL(AVG(SCORE)) FROM "
-					+ TABLE_SCORE
-					+ " WHERE A.OFFICENUM = OFFICENUM) AS SCOREAVERAGE "
-					+ "FROM "
-					+ TABLE_OFFICE
-					+ " A "
+			String querySQL = "SELECT * FROM "
+					+ "(SELECT ROWNUM AS RNUM, OFFICELIST.* FROM (SELECT "
+					+ "OFFICENUM, PART, SNAME, FNAME, "
+					+ "(SELECT COUNT(SCORE) FROM " + TABLE_SCORE + " WHERE OFFICENUM = " + TABLE_OFFICE + ".OFFICENUM) AS SCORECOUNT, "
+					+ "(SELECT CEIL(AVG(SCORE)) FROM " + TABLE_SCORE + " WHERE OFFICENUM = " + TABLE_OFFICE + ".OFFICENUM) AS SCOREAVERAGE "
+					+ "FROM " + TABLE_OFFICE + " "
 					+ queryWhere
-					+ "ORDER BY A.OFFICENUM ASC) Y "
-					+ "WHERE ROWNUM <= ?) X "
-					+ "WHERE X.RNUM >= ? ORDER BY X.RNUM DESC";
+					+ ") OFFICELIST WHERE ROWNUM <= ?) WHERE RNUM >= ? "
+					+ "ORDER BY RNUM DESC";
 			querySQL = querySQL.replaceAll("  ", " ");
 
 			connection = DBManager.getConnection();
 			pStatement = connection.prepareStatement(querySQL);
-			pStatement.setInt(1, startRow);
-			pStatement.setInt(2, endRow);
+			if (queryWhere.length() > 0) {
+				pStatement.setString(1, searchString);
+				pStatement.setInt(2, startRow);
+				pStatement.setInt(3, endRow);
+			} else {
+				pStatement.setInt(1, startRow);
+				pStatement.setInt(2, endRow);
+			}
 
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
@@ -102,17 +99,11 @@ public class OfficeDAO {
 	public OfficeDTO getView(int num) {
 		OfficeDTO officeDTO = new OfficeDTO();
 		try {
-			String querySQL = "SELECT A.*, "
-					+ "(SELECT COUNT(SCORE) FROM "
-					+ TABLE_SCORE
-					+ " WHERE A.OFFICENUM = OFFICENUM) AS SCORECOUNT, "
-					+ "(SELECT CEIL(AVG(SCORE)) FROM "
-					+ TABLE_SCORE
-					+ " WHERE A.OFFICENUM = OFFICENUM) AS SCOREAVERAGE "
-					+ "FROM "
-					+ TABLE_OFFICE
-					+ " A "
-					+ "WHERE A.OFFICENUM = ?";
+			String querySQL = "SELECT OFFICE.*, "
+					+ "(SELECT COUNT(SCORE) FROM " + TABLE_SCORE + " WHERE OFFICENUM = " + TABLE_OFFICE + ".OFFICENUM) AS SCORECOUNT, "
+					+ "(SELECT CEIL(AVG(SCORE)) FROM " + TABLE_SCORE + " WHERE OFFICENUM = " + TABLE_OFFICE + ".OFFICENUM) AS SCOREAVERAGE "
+					+ "FROM " + TABLE_OFFICE + " "
+					+ "WHERE OFFICENUM = ?";
 
 			connection = DBManager.getConnection();
 			pStatement = connection.prepareStatement(querySQL);

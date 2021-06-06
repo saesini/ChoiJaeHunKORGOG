@@ -24,13 +24,23 @@ public final class Pages {
 
 	public Pages() {}
 
-	public Pages(int currentPage, int rowsPerPage, int pagesPerWindow, String querySQL) {
+	public Pages(int currentPage, int rowsPerPage, int pagesPerWindow, String querySQL, String searchColumn, String searchString) {
+		searchColumn = searchColumn.trim();
+		searchString = searchString.trim();
+		
 		this.setRowsPerPage(rowsPerPage);
 		this.setPagesPerWindow(pagesPerWindow);
 
 		try {
+			if (searchColumn.length() > 0 && searchString.length() > 0) {
+				querySQL += " WHERE " + searchColumn + " LIKE '%' || ? || '%' ";
+			}
+
 			connection = DBManager.getConnection();
 			pStatement = connection.prepareStatement(querySQL);
+			if (searchColumn.length() > 0 && searchString.length() > 0) {
+				pStatement.setString(1, searchString);
+			}
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				totalRow = resultSet.getInt(1);

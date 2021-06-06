@@ -4,6 +4,10 @@
 	if (request.getParameter("agree1") == null || request.getParameter("agree1") == null) {
 		response.sendRedirect("/member/memberterms.jsp");
 	}
+
+	if ((String) session.getAttribute("memberID") != null) {
+		response.sendRedirect("/");
+	}
 %>
 <!DOCTYPE html>
 <html>

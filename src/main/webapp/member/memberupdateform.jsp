@@ -20,13 +20,12 @@
 	MemberDTO memberDTO = new MemberDTO();
 	memberDTO = memberDAO.getMember((String) session.getAttribute("memberID"));
 	String getTell = memberDTO.getTell();
-	if(getTell.length() == 2) {
-		getTell += " ";
-	}
- 	String[] tellArray = getTell.split("-");
-	String tell1 = tellArray[0];
-	String tell2 = tellArray[1];
-	String tell3 = tellArray[2];
+	getTell = getTell.replace("--", " - - ");
+
+	String[] tellArray = getTell.split("-");
+	String tell1 = tellArray[0].replace(" ", "");
+	String tell2 = tellArray[1].replace(" ", "");
+	String tell3 = tellArray[2].replace(" ", "");
 %>
 <!DOCTYPE html>
 <html>

@@ -35,7 +35,7 @@
 		exitResult = false;
 	} else if (memberID.length() < 1 || password.length() < 1) {
 		exitResult = false;
-	} else if (refererPage != null && refererPage.length() > 1 && refererPage.contains("/member/memberupdateform.jsp")) {
+	} else if (refererPage != null && refererPage.length() > 0 && refererPage.contains("/member/memberupdateform.jsp")) {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMemberID(memberID);
 

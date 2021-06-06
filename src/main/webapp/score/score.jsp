@@ -150,7 +150,7 @@
 					}
 					out.print("\"");
 					if (currentPage != 1) {
-						out.print(" onclick=\"movePage(1,' ,'" + searchString + "');\"");
+						out.print(" onclick=\"movePage(1,'" + getColumn + "', '" + searchString + "');\"");
 					}
 					out.print(">◀◀</li>");
 
@@ -162,7 +162,7 @@
 					}
 					out.print("\"");
 					if (currentPage > pages.getPrevPage()) {
-						out.print(" onclick=\"movePage(" + pages.getPrevPage() + ", '" + searchString + "');\"");
+						out.print(" onclick=\"movePage(" + pages.getPrevPage() + ", '" + getColumn + "', '" + searchString + "');\"");
 					}
 					out.print(">◀</li>");
 
@@ -176,7 +176,7 @@
 							}
 							out.print("\"");
 							if (printPage != currentPage) {
-								out.print("onclick=\"movePage(" + printPage + ", '" + searchString + "');\"");
+								out.print("onclick=\"movePage(" + printPage + ", '" + getColumn + "', '" + searchString + "');\"");
 							}
 							out.print(">" + printPage + "</li>");
 						}
@@ -191,7 +191,7 @@
 						}
 						out.print("\"");
 						if (totalPage > 0 && totalPage != currentPage) {
-							out.print(" onclick=\"movePage(" + pages.getNextPage() + ", '" + searchString + "');\"");
+							out.print(" onclick=\"movePage(" + pages.getNextPage() + ", '" + getColumn + "', '" + searchString + "');\"");
 						}
 						out.print(">▶</li>");
 					} else {
@@ -206,7 +206,7 @@
 					}
 					out.print("\"");
 					if (totalPage > 0 && totalPage != currentPage) {
-						out.print(" onclick=\"movePage(" + totalPage + ", '" + searchString + "');\"");
+						out.print(" onclick=\"movePage(" + totalPage + ", '" + getColumn + "', '" + searchString + "');\"");
 					}
 					out.print(">▶▶</li>");
 				%>

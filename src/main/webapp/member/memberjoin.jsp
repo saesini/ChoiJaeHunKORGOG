@@ -15,6 +15,10 @@
 		response.sendRedirect("/");
 	}
 
+	if ((String) session.getAttribute("memberID") != null) {
+		response.sendRedirect("/");
+	}
+	
 	String email = "";
 	String memberID = "";
 	String password = "";
@@ -71,7 +75,7 @@
 		joinResult = false;
 	} else if (!password.equals(password2)) {
 		joinResult = false;
-	} else if (refererPage != null && refererPage.length() > 1 && refererPage.contains("/member/memberjoinform.jsp")) {
+	} else if (refererPage != null && refererPage.length() > 0 && refererPage.contains("/member/memberjoinform.jsp")) {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setPermission(1);
 		memberDTO.setEmail(email);

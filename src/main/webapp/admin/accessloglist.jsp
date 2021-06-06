@@ -22,16 +22,13 @@
 		searchString = request.getParameter("string").trim();
 		switch (searchColumn) {
 			case "membernid":
-				searchColumn = "B.MEMBERID";
+				searchColumn = "MEMBERID";
 				break;
 			case "membername":
-				searchColumn = "B.MEMBERNAME";
+				searchColumn = "MEMBERNAME";
 				break;
 		}
 	}
-	
-	out.println(searchColumn);
-	out.println(searchString);
 
 	AccessLogDAO accessLogDAO = new AccessLogDAO();
 	Pages pages = new Pages();

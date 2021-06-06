@@ -189,17 +189,12 @@ public class BoardDAO {
 		searchColumn = searchColumn.trim();
 		searchString = searchString.trim();
 
-		String querySQL = "SELECT COUNT(*) AS TOTALROW FROM " + TABLE_BOARD + " A, " + TABLE_MEMBER + " B "
-				+ "WHERE A.MEMBERNUM=B.MEMBERNUM";
-		if (searchColumn.length() > 1 && searchString.length() > 1) {
-			querySQL += " AND " + searchColumn + " LIKE '%" + searchString + "%'";
-		}
-		querySQL = querySQL.replaceAll("  ", " ");
+		String querySQL = "SELECT COUNT(*) AS TOTALROW FROM " + TABLE_BOARD + " NATURAL JOIN " + TABLE_MEMBER;
 
 		int rowsPerPage = Environment.getBOARD_LIST_ROWS();
 		int pagesPerWindow = Environment.getBOARD_LIST_PAGES();
 
-		Pages page = new Pages(currentPage, rowsPerPage, pagesPerWindow, querySQL);
+		Pages page = new Pages(currentPage, rowsPerPage, pagesPerWindow, querySQL, searchColumn, searchString);
 		return page;
 	}
 
@@ -210,33 +205,30 @@ public class BoardDAO {
 
 		try {
 			String queryWhere = "";
-			if (searchColumn.length() > 1 && searchString.length() > 0) {
-				queryWhere = " AND " + searchColumn + " LIKE '%' || ? || '%' ";
+			if (searchColumn.length() > 0 && searchString.length() > 0) {
+				queryWhere = "AND " + searchColumn + " LIKE '%' || ? || '%' ";
 			}
-			String querySQL = "SELECT X.RNUM, X.* FROM (SELECT ROWNUM AS RNUM, Y.* FROM "
-					+ "(SELECT A.*, B.MEMBERID, B.MEMBERNAME FROM "
-					+ TABLE_BOARD
-					+ " A, "
-					+ TABLE_MEMBER
-					+ " B "
-					+ "WHERE A.MEMBERNUM=B.MEMBERNUM "
+
+			String querySQL = "SELECT  * FROM "
+					+ "("
+					+ "SELECT ROWNUM AS RNUM, "
+					+ "BOARDNUM, SUBJECT, MEMBERNAME, MEMBERID, WRITETIME, HITS "
+					+ "FROM " + TABLE_BOARD + " NATURAL JOIN " + TABLE_MEMBER
+					+ " WHERE ROWNUM <= ? "
 					+ "queryWhere"
-					+ "ORDER BY BOARDNUM ASC) Y "
-					+ "WHERE ROWNUM <= ?) X WHERE X.RNUM >= ? ORDER BY X.RNUM DESC";
+					+ ") "
+					+ "WHERE RNUM >= ? ORDER BY RNUM DESC";
 			querySQL = querySQL.replace("queryWhere", queryWhere);
-			querySQL = querySQL.replaceAll("  ", " ");
 
 			connection = DBManager.getConnection();
 			pStatement = connection.prepareStatement(querySQL);
-
-			int i = 1;
-			if (searchString != null && searchString.length() > 0) {
-				pStatement.setString(i, searchString);
-				i++;
+			pStatement.setInt(1, startRow);
+			if (queryWhere.length() > 0) {
+				pStatement.setString(2, searchString);
+				pStatement.setInt(3, endRow);
+			} else {
+				pStatement.setInt(2, endRow);
 			}
-			pStatement.setInt(i, startRow);
-			pStatement.setInt(i + 1, endRow);
-			System.out.println(querySQL);
 
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
@@ -244,13 +236,10 @@ public class BoardDAO {
 				do {
 					BoardDTO boardDTO = new BoardDTO();
 					boardDTO.setBoardNum(resultSet.getInt("BOARDNUM"));
-					boardDTO.setMemberNum(resultSet.getInt("MEMBERNUM"));
+					boardDTO.setSubject(resultSet.getString("SUBJECT"));
 					boardDTO.setMemberID(resultSet.getString("MEMBERID"));
 					boardDTO.setMemberName(resultSet.getString("MEMBERNAME"));
-					boardDTO.setSubject(resultSet.getString("SUBJECT"));
-					boardDTO.setContent(resultSet.getString("CONTENT"));
 					boardDTO.setWriteTime(resultSet.getTimestamp("WRITETIME"));
-					boardDTO.setEditTime(resultSet.getTimestamp("EDITTIME"));
 					boardDTO.setHits(resultSet.getInt("HITS"));
 					listDTO.add(boardDTO);
 				} while (resultSet.next());
@@ -275,10 +264,9 @@ public class BoardDAO {
 	public BoardDTO getView(int num) {
 		BoardDTO boardDTO = new BoardDTO();
 		try {
-			String querySQL = "SELECT A.*, B.MEMBERID, B.MEMBERNAME FROM "
-					+ TABLE_BOARD + " A, "
-					+ TABLE_MEMBER + " B "
-					+ "WHERE A.MEMBERNUM=B.MEMBERNUM AND A.BOARDNUM = ?";
+			String querySQL = "SELECT BOARDNUM, MEMBERNUM, MEMBERID, MEMBERNAME, SUBJECT, CONTENT, WRITETIME, EDITTIME, HITS FROM "
+					+ TABLE_BOARD + " NATURAL JOIN " + TABLE_MEMBER
+					+ " WHERE BOARDNUM = ?";
 
 			connection = DBManager.getConnection();
 			pStatement = connection.prepareStatement(querySQL);

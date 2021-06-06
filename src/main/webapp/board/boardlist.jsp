@@ -22,16 +22,16 @@
 		searchString = request.getParameter("string").trim();
 		switch (searchColumn) {
 			case "subject":
-				searchColumn = "A.SUBJECT";
+				searchColumn = "SUBJECT";
 				break;
 			case "content":
-				searchColumn = "A.CONTENT";
+				searchColumn = "CONTENT";
 				break;
 			case "membernid":
-				searchColumn = "B.MEMBERID";
+				searchColumn = "MEMBERID";
 				break;
 			case "membername":
-				searchColumn = "B.MEMBERNAME";
+				searchColumn = "MEMBERNAME";
 				break;
 		}
 	}

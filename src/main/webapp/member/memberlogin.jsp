@@ -36,7 +36,7 @@
 
 	if (request.getHeader("REFERER") == null || refererPage.length() < 1 || memberID.length() < 1 || password.length() < 1) {
 		loginResult = false;
-	} else if (refererPage != null && refererPage.length() > 1 && refererPage.contains("/member/memberloginform.jsp")) {
+	} else if (refererPage != null && refererPage.length() > 0 && refererPage.contains("/member/memberloginform.jsp")) {
 		inputMemberDTO.setMemberID(memberID);
 		inputMemberDTO.setPassword(password);
 		if (memberDAO.getCountLogin(inputMemberDTO.getMemberID(), inputMemberDTO.getPassword()) > 0) {

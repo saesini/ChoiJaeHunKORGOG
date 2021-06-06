@@ -86,24 +86,17 @@ public class ScoreDAO {
 		searchColumn = searchColumn.trim();
 		searchString = searchString.trim();
 
-		String querySQL = "SELECT COUNT(*) AS TOTALROW FROM " + TABLE_SCORE + " A, " + TABLE_OFFICE + " B "
-				+ "WHERE A.OFFICENUM=B.OFFICENUM";
-		if (officeNum > 0) {
-			querySQL += " AND A.OFFICENUM=" + officeNum;
-		} else if (searchColumn.length() > 1 && searchString.length() > 1) {
-			querySQL += " AND B." + searchColumn + " LIKE '%" + searchString + "%'";
-		}
-		querySQL = querySQL.replaceAll("  ", " ");
+		String querySQL = "SELECT COUNT(*) AS TOTALROW FROM " + TABLE_SCORE + " NATURAL JOIN " + TABLE_OFFICE;
 
-		int rowsPerPage;
 		if (officeNum > 0) {
-			rowsPerPage = Environment.getSCORE_OFFICE_ROWS();
-		} else {
-			rowsPerPage = Environment.getSCORE_LIST_ROWS();
+			searchColumn = "OFFICENUM";
+			searchString = String.valueOf(officeNum);
 		}
+
+		int rowsPerPage = Environment.getSCORE_LIST_ROWS();
 		int pagesPerWindow = Environment.getSCORE_LIST_PAGES();
 
-		Pages page = new Pages(currentPage, rowsPerPage, pagesPerWindow, querySQL);
+		Pages page = new Pages(currentPage, rowsPerPage, pagesPerWindow, querySQL, searchColumn, searchString);
 		return page;
 	}
 
@@ -115,53 +108,50 @@ public class ScoreDAO {
 		try {
 			String queryWhere = "";
 			if (officeNum > 0) {
-				queryWhere = " AND A.OFFICENUM=? ";
-			} else if (searchColumn.length() > 1 && searchString.length() > 0) {
-				queryWhere = " AND C." + searchColumn + " LIKE '%' || ? || '%' ";
+				queryWhere = " AND " + TABLE_OFFICE + ".OFFICENUM=? ";
+				searchString = String.valueOf(officeNum);
+			} else if (searchColumn.length() > 0 && searchString.length() > 0) {
+				queryWhere = " AND " + TABLE_OFFICE + "." + searchColumn + " LIKE '%' || ? || '%' ";
 			}
-			String querySQL = "SELECT X.RNUM, X.* FROM (SELECT ROWNUM AS RNUM, Y.* FROM "
-					+ "(SELECT A.*, B.MEMBERID, B.MEMBERNAME, C.SNAME FROM "
-					+ TABLE_SCORE
-					+ " A, "
-					+ TABLE_MEMBER
-					+ " B, "
-					+ TABLE_OFFICE
-					+ " C "
-					+ "WHERE A.MEMBERNUM=B.MEMBERNUM AND A.OFFICENUM=C.OFFICENUM "
+
+			String querySQL = "SELECT  * FROM "
+					+ "("
+					+ "SELECT ROWNUM AS RNUM, "
+					+ TABLE_SCORE + ".SCORENUM, " + TABLE_MEMBER + ".MEMBERNAME, " + TABLE_SCORE + ".SCORINGTIME, " + TABLE_OFFICE + ".SNAME, " + TABLE_SCORE + ".SCORE, " + TABLE_SCORE + ".COMMENTS "
+					+ "FROM " + TABLE_SCORE + " JOIN OFFICE "
+					+ "ON " + TABLE_SCORE + ".OFFICENUM = " + TABLE_OFFICE + ".OFFICENUM JOIN MEMBER "
+					+ "ON " + TABLE_SCORE + ".MEMBERNUM = " + TABLE_MEMBER + ".MEMBERNUM "
+					+ " WHERE ROWNUM <= ? "
 					+ "queryWhere"
-					+ "ORDER BY SCORENUM ASC) Y "
-					+ "WHERE ROWNUM <= ?) X WHERE X.RNUM >= ? ORDER BY X.RNUM DESC";
+					+ ") "
+					+ "WHERE RNUM >= ? ORDER BY RNUM DESC";
 			querySQL = querySQL.replace("queryWhere", queryWhere);
-			querySQL = querySQL.replaceAll("  ", " ");
 
 			connection = DBManager.getConnection();
 			pStatement = connection.prepareStatement(querySQL);
-
-			int i = 1;
-			if (officeNum > 0) {
-				pStatement.setInt(i, officeNum);
-				i++;
-			} else if (searchString != null && searchString.length() > 0) {
-				pStatement.setString(i, searchString);
-				i++;
+			pStatement.setInt(1, startRow);
+			if (queryWhere.length() > 0) {
+				if (officeNum > 0) {
+					pStatement.setInt(2, officeNum);
+				} else if (searchString != null && searchString.length() > 0) {
+					pStatement.setString(2, searchString);
+				}
+				pStatement.setString(2, searchString);
+				pStatement.setInt(3, endRow);
+			} else {
+				pStatement.setInt(2, endRow);
 			}
-			pStatement.setInt(i, startRow);
-			pStatement.setInt(i + 1, endRow);
-			System.out.println(querySQL);
 
 			resultSet = pStatement.executeQuery();
 			if (resultSet.next()) {
 				do {
 					ScoreDTO scoreDTO = new ScoreDTO();
 					scoreDTO.setScoreNum(resultSet.getInt("SCORENUM"));
-					scoreDTO.setMemberNum(resultSet.getInt("MEMBERNUM"));
-					scoreDTO.setMemberID(resultSet.getString("MEMBERID"));
 					scoreDTO.setMemberName(resultSet.getString("MEMBERNAME"));
-					scoreDTO.setOfficeNum(resultSet.getInt("OFFICENUM"));
+					scoreDTO.setScoringTime(resultSet.getTimestamp("SCORINGTIME"));
 					scoreDTO.setOfficeSname(resultSet.getString("SNAME"));
 					scoreDTO.setScore(resultSet.getInt("SCORE"));
 					scoreDTO.setComments(resultSet.getString("COMMENTS"));
-					scoreDTO.setScoringTime(resultSet.getTimestamp("SCORINGTIME"));
 					listDTO.add(scoreDTO);
 				} while (resultSet.next());
 			} else {

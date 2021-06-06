@@ -1,4 +1,4 @@
-<%@page language="java" contentType="text/html;charesultsetet=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/include/common.jsp" %>
 <%
 	if (request.getParameter("agree1") == null || request.getParameter("agree1") == null) {

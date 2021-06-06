@@ -1,4 +1,4 @@
-<%@page language="java" contentType="text/html;charesultsetet=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="top_header" class="preventdrag">
 	<a id="top_logo" href="/"><img src="/img/logo.svg" alt="GOG"/></a><!--
 	--><a class="top_menu" href="/intro.jsp">서비스소개</a><!--

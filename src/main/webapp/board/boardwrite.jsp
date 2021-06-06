@@ -1,4 +1,4 @@
-<%@page language="java" contentType="text/html;charesultsetet=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/include/common.jsp" %>
 <%@include file="/include/tools.jsp" %>
 <%@page import="org.korgog.service.Tools"%>

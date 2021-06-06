@@ -32,15 +32,15 @@
 			includePage = "/admin/accesslogview.jsp";
 			title = "";
 			script.add("/script/accesslogview.js");
-			css.add("/css/common.css");
-			css.add("/css/accesslog.css");
+			css.add("/style/common.css");
+			css.add("/style/accesslog.css");
 			break;
 		default:
 			includePage = "/admin/accessloglist.jsp";
 			title = "회원로그";
 			script.add("/script/accessloglist.js");
-			css.add("/css/common.css");
-			css.add("/css/accesslog.css");
+			css.add("/style/common.css");
+			css.add("/style/accesslog.css");
 			break;
 	}
 	Iterator<String> iterScript = script.iterator();

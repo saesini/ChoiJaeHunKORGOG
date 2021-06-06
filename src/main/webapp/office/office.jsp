@@ -23,15 +23,15 @@
 			script.add("//dapi.kakao.com/v2/maps/sdk.js?appkey=1473f6d777f7970037217ffe4332b3bc&libraries=services");
 			script.add("https://code.jquery.com/jquery-3.6.0.js");
 			script.add("/script/officeview.js");
-			css.add("/css/common.css");
-			css.add("/css/office.css");
+			css.add("/style/common.css");
+			css.add("/style/office.css");
 			break;
 		default:
 			includePage = "/office/officelist.jsp";
 			title = "관공서정보 목록";
 			script.add("/script/officelist.js");
-			css.add("/css/common.css");
-			css.add("/css/office.css");
+			css.add("/style/common.css");
+			css.add("/style/office.css");
 			break;
 	}
 	Iterator<String> iterScript = script.iterator();

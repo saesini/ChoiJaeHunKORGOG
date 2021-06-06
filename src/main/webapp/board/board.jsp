@@ -22,32 +22,32 @@
 			title = "글작성";
 			script.add("https://code.jquery.com/jquery-3.6.0.js");
 			script.add("/script/boardform.js");
-			css.add("/css/common.css");
-			css.add("/css/boardform.css");
+			css.add("/style/common.css");
+			css.add("/style/boardform.css");
 			break;
 		case "edit":
 			includePage = "/board/boardeditform.jsp";
 			title = "글수정";
 			script.add("https://code.jquery.com/jquery-3.6.0.js");
 			script.add("/script/boardform.js");
-			css.add("/css/common.css");
-			css.add("/css/boardform.css");
+			css.add("/style/common.css");
+			css.add("/style/boardform.css");
 			break;
 		case "view":
 			includePage = "/board/boardview.jsp";
 			title = "";
 			script.add("https://code.jquery.com/jquery-3.6.0.js");
 			script.add("/script/boardview.js");
-			css.add("/css/common.css");
-			css.add("/css/board.css");
+			css.add("/style/common.css");
+			css.add("/style/board.css");
 			break;
 		default:
 			includePage = "/board/boardlist.jsp";
 			title = "토론게시판";
 			script.add("https://code.jquery.com/jquery-3.6.0.js");
 			script.add("/script/boardlist.js");
-			css.add("/css/common.css");
-			css.add("/css/board.css");
+			css.add("/style/common.css");
+			css.add("/style/board.css");
 			break;
 	}
 	Iterator<String> iterScript = script.iterator();

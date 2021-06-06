@@ -6,8 +6,8 @@
 		<% pageContext.include("/include/meta.jsp");%>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script type="text/javascript" src="/script/memberterms.js"></script>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/memberterms.css">
+		<link rel="stylesheet" type="text/css" href="/style/common.css">
+		<link rel="stylesheet" type="text/css" href="/style/memberterms.css">
 		<title>회원가입 약관 - GOG</title>
 	</head>
 	<body>

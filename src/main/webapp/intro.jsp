@@ -5,8 +5,8 @@
 <%
 	pageContext.include("/include/meta.jsp");
 %>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/intro.css">
+		<link rel="stylesheet" type="text/css" href="/style/common.css">
+		<link rel="stylesheet" type="text/css" href="/style/intro.css">
 		<title>서비스 소개 - GOG</title>
 	</head>
 	<body>

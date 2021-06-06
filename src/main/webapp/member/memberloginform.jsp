@@ -14,8 +14,8 @@
 		<% pageContext.include("/include/meta.jsp");%>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script type="text/javascript" src="/script/memberloginform.js"></script>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/memberloginform.css">
+		<link rel="stylesheet" type="text/css" href="/style/common.css">
+		<link rel="stylesheet" type="text/css" href="/style/memberloginform.css">
 		<title>회원 로그인 - GOG</title>
 	</head>
 	<body>

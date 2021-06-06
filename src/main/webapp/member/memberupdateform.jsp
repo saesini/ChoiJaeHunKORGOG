@@ -31,8 +31,8 @@
 <html>
 	<head>
 		<% pageContext.include("/include/meta.jsp");%>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/memberupdate.css">
+		<link rel="stylesheet" type="text/css" href="/style/common.css">
+		<link rel="stylesheet" type="text/css" href="/style/memberupdate.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

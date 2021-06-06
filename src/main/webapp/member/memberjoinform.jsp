@@ -16,8 +16,8 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script type="text/javascript" src="/script/memberjoinform.js"></script>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/memberjoin.css">
+		<link rel="stylesheet" type="text/css" href="/style/common.css">
+		<link rel="stylesheet" type="text/css" href="/style/memberjoin.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<title>회원 가입 - GOG</title>
 	</head>

@@ -4,8 +4,8 @@
 <html>
 	<head>
 		<% pageContext.include("/include/meta.jsp");%>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/front.css">
+		<link rel="stylesheet" type="text/css" href="/style/common.css">
+		<link rel="stylesheet" type="text/css" href="/style/front.css">
 		<title>관공서 정보 안내 시스템 - GOG</title>
 	</head>
 	<body>

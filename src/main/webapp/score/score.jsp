@@ -45,8 +45,8 @@
 	<head>
 		<% pageContext.include("/include/meta.jsp");%>
 		<script type="text/javascript" src="/script/score.js"></script>
-		<link rel="stylesheet" type="text/css" href="/css/common.css">
-		<link rel="stylesheet" type="text/css" href="/css/score.css">
+		<link rel="stylesheet" type="text/css" href="/style/common.css">
+		<link rel="stylesheet" type="text/css" href="/style/score.css">
 		<title>관공서평가 목록 - GOG</title>
 	</head>
 	<body>

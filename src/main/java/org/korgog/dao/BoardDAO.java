@@ -213,7 +213,7 @@ public class BoardDAO {
 				queryWhere = "AND " + searchColumn + " LIKE '%' || ? || '%' ";
 			}
 
-			String querySQL = "SELECT  * FROM "
+			String querySQL = "SELECT * FROM "
 					+ "("
 					+ "SELECT ROWNUM AS RNUM, "
 					+ "BOARDNUM, SUBJECT, MEMBERNAME, MEMBERID, WRITETIME, HITS "

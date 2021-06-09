@@ -39,6 +39,7 @@
 
 	BoardDTO boardDTO = new BoardDTO();
 	boardDTO.setBoardNum(boardNum);
+	boardDTO.setMemberNum((Integer) session.getAttribute("memberNum"));
 	boardDTO.setMemberID((String) session.getAttribute("memberID"));
 
 	BoardDAO boardDAO = new BoardDAO();

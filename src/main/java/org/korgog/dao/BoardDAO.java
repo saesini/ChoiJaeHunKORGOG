@@ -15,6 +15,7 @@ import org.korgog.dto.AccessLogDTO;
 import org.korgog.dto.BoardDTO;
 
 public class BoardDAO {
+
 	private final String TABLE_BOARD = Environment.getTABLE_BOARD();
 	private final String TABLE_MEMBER = Environment.getTABLE_MEMBER();
 	private Connection connection = null;
@@ -147,11 +148,14 @@ public class BoardDAO {
 		try {
 			String querySQL = "DELETE FROM "
 					+ TABLE_BOARD
-					+ " A WHERE EXISTS "
-					+ "(SELECT * FROM "
+					+ " WHERE EXISTS "
+					+ "(SELECT 1 FROM "
 					+ TABLE_MEMBER
-					+ " B WHERE A.MEMBERNUM=B.MEMBERNUM AND "
-					+ "B.MEMBERID = ?) AND "
+					+ " WHERE "
+					+ TABLE_BOARD + ".MEMBERNUM=" + TABLE_MEMBER + ".MEMBERNUM "
+					+ "AND "
+					+ TABLE_MEMBER + ".MEMBERID = ?) "
+					+ "AND "
 					+ "BOARDNUM = ?";
 
 			connection = DBManager.getConnection();
